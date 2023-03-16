@@ -12,6 +12,7 @@ def reposition(rover:Rover, drone_collection):
     
     print('Move Forward')
     while rover.ul_front_edge.check_drive_ok() == False:
+        print('moving forward')
         rover.move_forward(speed=1)
     sleep(1)
 
@@ -19,10 +20,12 @@ def reposition(rover:Rover, drone_collection):
     rover.change_yaw(angle=math.radians(90), speed=0.1)
     sleep(1)
 
+    print('finding drone position')
     lat, lon, angle = find_position(rover=rover, drone_collection=drone_collection)
     slope = math.tan(math.radians(angle))
     line = create_line(x=lon, y=lat, slope=slope)
-    
+    print('line created')
+
     while True:
         rover.update_rover()
         point = Point(rover.lon, rover.lat)
