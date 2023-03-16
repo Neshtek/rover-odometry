@@ -32,15 +32,13 @@ def reposition(rover:Rover, drone_collection):
         rover.update_rover()
         point = Point(rover.lon, rover.lat)
         if line.distance(point) < 0.000001:
-            rover_yaw = rover.current_yaw()
-            rotation_angle = abs(rover_yaw - angle)
-            rover.change_yaw(angle=math.radians(rotation_angle), speed=0.1)
+            rover.change_yaw(angle=math.radians(90), speed=0.1)
             sleep(1)
             break
 
         if rover.ul_front_edge.check_drive_ok() == False:
             rover.move_forward(speed=0.1)
-            sleep(1)
+            sleep(2)
         else:
             print('Drone not found')
             break

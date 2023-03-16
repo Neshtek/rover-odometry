@@ -98,21 +98,39 @@ class Rover:
         return angle
 
     def change_yaw(self, angle, speed=0):
-        system = self.vehicle.recv_match(type='ATTITUDE', blocking=True)
         print(angle) # Correct angle by adding abs difference in 180 degrees
+        system = self.vehicle.recv_match(type='ATTITUDE', blocking=True)
         initial = math.degrees(system.yaw)
+        final = initial + math.degrees(angle)
         current = initial
-        self.vehicle.mav.send(mavutil.mavlink.MAVLink_set_position_target_local_ned_message(10, self.vehicle.target_system,
-                        self.vehicle.target_component, mavutil.mavlink.MAV_FRAME_BODY_OFFSET_NED , int(0b100111100111), 0, 0, 0, (speed), 0, 0, 0, 0, 0, angle, 0))
+        # self.vehicle.mav.send(mavutil.mavlink.MAVLink_set_position_target_local_ned_message(10, self.vehicle.target_system,
+        #                 self.vehicle.target_component, mavutil.mavlink.MAV_FRAME_BODY_OFFSET_NED , int(0b100111100111), 0, 0, 0, (speed), 0, 0, 0, 0, 0, angle, 0))
         
         while True:
-            change = abs(abs(initial) - abs(current))
-            if change >= math.degrees(angle):
-                break
             self.vehicle.mav.send(mavutil.mavlink.MAVLink_set_position_target_local_ned_message(10, self.vehicle.target_system,
                         self.vehicle.target_component, mavutil.mavlink.MAV_FRAME_BODY_OFFSET_NED , int(0b100111100111), 0, 0, 0, (speed), 0, 0, 0, 0, 0, angle, 0))
+            
             system = self.vehicle.recv_match(type='ATTITUDE', blocking=True)
             current = math.degrees(system.yaw)
+            
+            if final > 180:
+                if current > 0:
+                    change = current - initial
+                else: 
+                    neg_change = 180 + current
+                    change += neg_change
+            elif final < -180:
+                if current < 0:
+                    change = initial - current
+                else:
+                    neg_change = 180 - current
+                    change += neg_change
+            else:
+                change = abs(current - initial)
+            
+            if change >= math.degrees(angle):
+                break
+            
             print('initial head', initial)
             print('current head', current)
             print('change head', change)
