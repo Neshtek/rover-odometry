@@ -10,6 +10,7 @@ class Rover:
 
         _ = vehicle.messages.keys() #All parameters that can be fetched
 
+
         self.serial = rover_serial
         self.vehicle = vehicle
         self.working_status = False
@@ -106,12 +107,13 @@ class Rover:
         
         while True:
             change = abs(abs(initial) - abs(current))
-            if change >= 90:
+            if change >= math.degrees(angle):
                 break
             self.vehicle.mav.send(mavutil.mavlink.MAVLink_set_position_target_local_ned_message(10, self.vehicle.target_system,
                         self.vehicle.target_component, mavutil.mavlink.MAV_FRAME_BODY_OFFSET_NED , int(0b100111100111), 0, 0, 0, (speed), 0, 0, 0, 0, 0, angle, 0))
             system = self.vehicle.recv_match(type='ATTITUDE', blocking=True)
             current = math.degrees(system.yaw)
+            print('initial head', initial)
             print('current head', current)
             print('change head', change)
    

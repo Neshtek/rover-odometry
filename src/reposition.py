@@ -6,6 +6,8 @@ from shapely.geometry import LineString, Point
 
 # Reposition rover after it completes cleaning cycle
 def reposition(rover:Rover, drone_collection):
+    rover.setup_arm()
+    rover.change_vehicle_mode('GUIDED')
     print('Turn Right')
     rover.change_yaw(angle=math.radians(90), speed=0.1)
     sleep(1)
@@ -14,7 +16,7 @@ def reposition(rover:Rover, drone_collection):
     while rover.ul_front_edge.check_drive_ok() == False:
         print('moving forward')
         rover.move_forward(speed=1)
-    sleep(1)
+        sleep(2)
 
     print('Turn Right')
     rover.change_yaw(angle=math.radians(90), speed=0.1)
@@ -36,7 +38,7 @@ def reposition(rover:Rover, drone_collection):
             sleep(1)
             break
 
-        if rover.ul_front_edge.check_drive_ok() == True:
+        if rover.ul_front_edge.check_drive_ok() == False:
             rover.move_forward(speed=0.1)
             sleep(1)
         else:
