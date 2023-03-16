@@ -24,7 +24,8 @@ def reposition(rover:Rover, drone_collection):
     line = create_line(x=lon, y=lat, slope=slope)
     
     while True:
-        point = Point(lon, lat)
+        rover.update_rover()
+        point = Point(rover.lon, rover.lat)
         if line.distance(point) < 0.000001:
             rover_yaw = rover.current_yaw()
             rotation_angle = abs(rover_yaw - angle)

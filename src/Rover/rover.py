@@ -10,8 +10,6 @@ class Rover:
 
         _ = vehicle.messages.keys() #All parameters that can be fetched
 
-        self.update_rover()
-
         self.serial = rover_serial
         self.vehicle = vehicle
         self.working_status = False
@@ -22,6 +20,7 @@ class Rover:
         self.drone_serial = "ERROR000000000"
         self.drone_status = "Free"
         self.rover_status = "Free"
+        self.update_rover()
 
     def change_vehicle_mode(self, mode):
         print("Changing vehicle mode to", mode)
