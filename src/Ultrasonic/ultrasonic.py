@@ -47,14 +47,14 @@ class Ultrasonic:
         edge_dist = self.get_distance()    
         if edge_dist <= 10:
             print ("Measured Distance = %.1f cm" % edge_dist)
-            return False
+            return True
         else:
             print ("Measured Distance = %.1f cm" % edge_dist)
-            return True
+            return False
             time.sleep(1) #time too much
             d_edge = self.get_distance()
             if d_edge > 10:
-                return True
+                return False
                 print ("Measured Distance 2 = %.1f cm" % d_edge)
             else:
                 pass

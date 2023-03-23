@@ -13,7 +13,7 @@ def reposition(rover:Rover, drone_collection):
     sleep(1)
     
     print('Move Forward')
-    while rover.ul_front_edge.check_drive_ok() == False:
+    while rover.ul_front_edge.check_drive_ok() == True:
         print('moving forward')
         rover.move_forward(speed=1)
         sleep(2)
@@ -36,7 +36,7 @@ def reposition(rover:Rover, drone_collection):
             sleep(1)
             break
 
-        if rover.ul_front_edge.check_drive_ok() == False:
+        if rover.ul_front_edge.check_drive_ok() == True:
             rover.move_forward(speed=0.1)
             sleep(2)
         else:
