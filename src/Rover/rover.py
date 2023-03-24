@@ -10,14 +10,11 @@ class Rover:
 
         _ = vehicle.messages.keys() #All parameters that can be fetched
 
-
         self.serial = rover_serial
         self.vehicle = vehicle
         self.working_status = False
-        self.ul_front_edge = Ultrasonic(21,20)
-        # self.ul_front_next = Ultrasonic(13,14)
-        self.ul_back_edge = Ultrasonic(7,8)
-        # self.ul_back_next = Ultrasonic(17,18)
+        self.front_edge = Ultrasonic(21,20)
+        self.back_edge = Ultrasonic(7,8)
         self.drone_serial = "ERROR000000000"
         self.drone_status = "Free"
         self.rover_status = "Free"

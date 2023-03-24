@@ -49,3 +49,6 @@ def create_line(x, y, slope):
     line = LineString([(line_x[0], line_y[0]), (line_x[1], line_y[1])])
     
     return line
+
+if __name__ == '__main__':
+    pass

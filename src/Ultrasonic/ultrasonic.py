@@ -4,7 +4,6 @@ import time
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-
 class Ultrasonic:
     def __init__(self, TRIGGER, ECHO):
         print('Created')
@@ -14,7 +13,6 @@ class Ultrasonic:
         self.area_completed = False
         GPIO.setup(self.TRIGGER, GPIO.OUT)
         GPIO.setup(self.ECHO, GPIO.IN)
-
 
     def get_distance(self):
         # set Trigger to HIGH
@@ -60,3 +58,6 @@ class Ultrasonic:
                 pass
         print ("Measured Distance = %.1f cm" % edge_dist)
         time.sleep(0.1)
+
+if __name__ == '__main__':
+    pass
